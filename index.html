@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Your Name] Photography</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Lato:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #FAF9F7;
+      --blush: #E9CFCB;
+      --sage: #C8D5C0;
+      --charcoal: #333333;
+      --champagne: #D4B483;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+      background-color: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      margin-top: 0;
+    }
+
+    .script {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.5rem;
+      color: var(--champagne);
+    }
+
+    a.button {
+      display: inline-block;
+      padding: 0.75em 1.5em;
+      background-color: var(--blush);
+      color: var(--charcoal);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.3s;
+      font-weight: 700;
+    }
+
+    a.button:hover {
+      background-color: var(--champagne);
+    }
+
+    section {
+      padding: 4em 2em;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5em 1em;
+    }
+
+    nav ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2em;
+      transition: max-height 0.3s ease;
+    }
+
+    nav li {
+      display: inline;
+    }
+
+    nav a {
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--charcoal);
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--champagne);
+    }
+
+    nav a.active {
+      color: var(--champagne);
+      border-bottom: 2px solid var(--champagne);
+      padding-bottom: 0.2em;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      cursor: pointer;
+      width: 30px;
+      height: 24px;
+    }
+
+    .hamburger span {
+      height: 3px;
+      width: 100%;
+      background: var(--charcoal);
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav ul {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.95);
+        max-height: 0;
+        overflow: hidden;
+      }
+
+      nav ul.show {
+        max-height: 300px;
+        padding: 1em 0;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* Hamburger open animation */
+    .hamburger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Hero */
+    .hero {
+      background: url('https://picsum.photos/1600/900?grayscale') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 8em 2em;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* About */
+    .about {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2em;
+    }
+
+    .about img {
+      max-width: 300px;
+      border-radius: 50%;
+    }
+
+    /* Portfolio */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1em;
+    }
+
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.4s;
+      border-radius: 8px;
+    }
+
+    .portfolio-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .portfolio-item span {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      color: white;
+      font-size: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: 8px;
+    }
+
+    .portfolio-item:hover span {
+      opacity: 1;
+    }
+
+    /* Experience */
+    .experience-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2em;
+      text-align: center;
+    }
+
+    /* Testimonials */
+    .testimonial {
+      background-color: var(--blush);
+      padding: 2em;
+      border-radius: 12px;
+      font-style: italic;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--charcoal);
+      color: white;
+      text-align: center;
+      padding: 2em;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul id="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="weddings.html">Weddings</a></li>
+      <li><a href="engagements.html">Engagements</a></li>
+      <li><a href="lifestyle.html">Lifestyle</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Timeless Wedding & Lifestyle Photography</h1>
+      <p>Capturing love, laughter, and every little detail — so your story lasts forever.</p>
+      <a href="#portfolio" class="button">View Portfolio</a>
+      <a href="#contact" class="button">Book a Session</a>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about">
+    <img src="https://picsum.photos/400/400" alt="Photographer Portrait">
+    <div>
+      <h2>Hi, I’m [Your Name]!</h2>
+      <p>I believe the best photos come from real moments — the belly laughs, the quiet glances, the joyful tears. My goal is to create images that feel natural, emotional, and timeless.</p>
+      <p class="script">Let’s turn fleeting moments into forever memories.</p>
+    </div>
+  </section>
+
+  <!-- Portfolio Preview -->
+  <section id="portfolio">
+    <h2>Stories I’ve Captured</h2>
+    <div class="portfolio-grid">
+      <a href="weddings.html" class="portfolio-item">
+        <img src="https://picsum.photos/id/1011/500/400" alt="Weddings">
+        <span>Weddings</span>
+      </a>
+      <a href="engagements.html" class="portfolio-item">
+        <img src="https://picsum.photos/id/1027/500/400" alt="Engagements">
+        <span>Engagements</span>
+      </a>
+      <a href="lifestyle.html" class="portfolio-item">
+        <img src="https://picsum.photos/id/1005/500/400" alt="Lifestyle">
+        <span>Lifestyle</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section>
+    <h2>The Experience</h2>
+    <p>Your day should feel easy, fun, and unforgettable — the photos are just the bonus.</p>
+    <div class="experience-steps">
+      <div><h3>1. Connect</h3><p>Tell me your story.</p></div>
+      <div><h3>2. Plan</h3><p>We’ll create a relaxed, stress-free experience.</p></div>
+      <div><h3>3. Shoot</h3><p>You live the moment while I capture it all.</p></div>
+      <div><h3>4. Deliver</h3><p>Relive your story through timeless photos.</p></div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section>
+    <h2>Kind Words</h2>
+    <div class="testimonial">
+      “We felt so comfortable in front of the camera. The photos are more than we ever imagined — they feel like us. We’ll treasure them forever.” – Sarah & Miguel
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <section id="contact" style="text-align:center;">
+    <h2>Let’s Tell Your Story</h2>
+    <p>Ready to capture your big day, your love story, or a moment in time?</p>
+    <a href="mailto:youremail@example.com" class="button">Send an Inquiry</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 [Your Name Photography] | Follow me on Instagram @yourhandle</p>
+  </footer>
+
+  <!-- Nav Toggle Script -->
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+      hamburger.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
